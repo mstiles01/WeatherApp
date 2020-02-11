@@ -20,22 +20,28 @@ window.addEventListener('load', () =>{
             })
     
             .then(data => {
-                console.log(data)
-                const {temperature, summary} = data.currently
+
+                const {temperature, summary, icon} = data.currently
+                //Set DOM Elements from API
                 temperatureDegree.textContent = temperature;
                 temperatureDescription.textContent = summary;
+                locationTimezone.textContent = data.timezone;
+                //Set Icon
+                setIcons(icon, document.querySelector('.icon'));
             });
            
         });
 
-
-      
     }
 
-    
-    else{
-        h1.textContent = "Please Enable location for weather"
+    function setIcons(icon, iconId){
+        const skycons = new Skycons({color: "white"});
+        const currentIcon = icon.replace(/-/g, "_").toUpperCase();
+        skycons.play();
+        return skycons.set(iconId, Skycons[currentIcon]);
+
     }
+
 
    
 });
